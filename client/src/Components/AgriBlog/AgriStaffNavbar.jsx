@@ -37,14 +37,7 @@ export default function AgriStaffNavbar() {
           >
             Add New
           </Button>
-          <Button
-            variant="outlined"
-            color="inherit"
-            className={classes.button}
-            onClick={handleLogoutClick}
-          >
-            Log out
-          </Button>
+         
         </div>
       </Toolbar>
     </AppBar>
