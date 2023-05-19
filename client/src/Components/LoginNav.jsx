@@ -40,7 +40,7 @@ export default function Navbar() {
             <div>
               <Button color="inherit" href="/">User Home</Button>
             </div>
-            <Button color="inherit" href="/login" className={classes.logoutButton}>Logout</Button>
+           
           </Toolbar>
         </AppBar>
       </div>

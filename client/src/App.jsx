@@ -124,31 +124,31 @@ export default function App() {
         <Route path="/selectionStaff" element={<SelectionPageStaff />} />
         <Route path="/agriForm" element={<><AgriBlogForm /><Footer /></>} />
         <Route path="/agriServices" element={<><AgriStaffNavbar /><ImageGridAgri /><SelectionPageStaff /><Footer /></>} />
-        <Route path="/agriArticle" element={<><AgriBlog /><Footer /></>} />
+        <Route path="/agriArticle" element={<><HomeNavbar/><AgriBlog /><Footer /></>} />
         <Route path="/agriArticleEdit" element={<><UpdateAgriBlog /><Footer /></>} />
         <Route path="/agriUser" element={<><ImageGridNavBar/><ImageGridAgriUser /><SelectionPage /><Footer /></>} />
         <Route path="/addanimalblog" element={<><AnimalUserNav /><AnimalBlogForm /><SelectionPage /><Footer /></>} />
         <Route path="/allanimblogs" element={<><ImageGridNavBar/><AllAnimalBlogs /><SelectionPage /><Footer /></>} />
         <Route path="/animalArticle" element={<><HomeNavbar/><AnimalBlog /><Footer /></>} />
-        <Route path="/allBlogStaff" element={<><AnimalStaffNavbar /><AllBlogsStaff /><SelectionPageStaff /><Footer /></>} />
+        <Route path="/allBlogStaff" element={<><AgriStaffNavbar /><AllBlogsStaff /><SelectionPageStaff /><Footer /></>} />
         <Route path="/blogUpdate" element={<><UpdateBlog /><Footer /></>} />
 
         <Route path="/cusviewbeef" element={<><HomeNavbar/><CusViewBeef /><Footer /></>} />
         <Route path="/cusviewchicken" element={<><HomeNavbar/><CusViewChicken /><Footer /></>} />
-        <Route path="/cusSinglechicken" element={<><HomeNavbar/><SingleChickenDetails /><Footer /></>} />
-        <Route path="/cusSinglebeef" element={<><HomeNavbar/><SingleBeefDetails /><Footer /></>} />
+        <Route path="/cusSinglechicken" element={<><SingleChickenDetails /><Footer /></>} />
+        <Route path="/cusSinglebeef" element={<><SingleBeefDetails /><Footer /></>} />
         <Route path="/test" element={<Test />} />
         <Route path="/animal" element={<Animal />} />
         <Route path="/milk" element={<><Milk /><APNavbar /><AdminFooter /></>} />
         <Route path="/beef" element={<><Beef /><APNavbar /><AdminFooter /></>} />
 
-        <Route path="/singlebeef" element={<BeefDetails />} />
+        <Route path="/singlebeef" element={<><BeefDetails /><AdminFooter /></>} />
         <Route path="/vbeef" element={<><ViewBeef /><APNavbar /><AdminFooter /></>} />
         <Route path="/upbeef" element={<><UpdateBeef /><APNavbar /><AdminFooter /></>} />
         <Route path="/egg" element={<><Egg /><APNavbar /><AdminFooter /></>} />
         <Route path="/pork" element={<><Pork /><APNavbar /><AdminFooter /></>} />
         <Route path="/chicken" element={<><Chicken /><APNavbar /><AdminFooter /></>} />
-        <Route path="/singlechicken" element={<ChickenDetails />} />
+        <Route path="/singlechicken" element={<><ChickenDetails /><AdminFooter /></>} />
         <Route path="/vchicken" element={<><ViewChicken /><APNavbar /><AdminFooter /></>} />
         <Route path="/upchicken" element={<><UpdateChicken /><APNavbar /><AdminFooter /></>} />
         <Route path="/goatmilk" element={<><GoatMilk /><APNavbar /><AdminFooter /></>} />
@@ -156,20 +156,20 @@ export default function App() {
 
         {/*Edited by kuls */}
         <Route path="/vvegi" element={<><ViewVegi/> <APNavbar /> <AdminFooter /> </> }></Route>
-        <Route path="/svegi" element={<><VegiDetails /><APNavbar /> <AdminFooter /> </>} />
+        <Route path="/svegi" element={<><VegiDetails /> <AdminFooter /> </>} />
         <Route path="/addvegi" element={<><AddVegi /><APNavbar /><AdminFooter /></>} />
         <Route path="/upvegi" element={<><UpdateVegi /><APNavbar /><AdminFooter /></>} />
         <Route path="/vrice" element={<><ViewRice/> <APNavbar /> <AdminFooter /> </> }></Route>
         <Route path="/addrice" element={<><AddRice /><APNavbar /><AdminFooter /></>} />
-        <Route path="/srice" element={<><RiceDetails /><APNavbar /> <AdminFooter /> </>} />
+        <Route path="/srice" element={<><RiceDetails /> <AdminFooter /> </>} />
         <Route path="/uprice" element={<><UpdateRice/> <APNavbar /> <AdminFooter /> </> }></Route>
         <Route path="/clientvegi" element={<><ClientViewVegi/> <HomeNavbar /> <Footer /> </> }></Route>
-        <Route path="/clientsvegi" element={<><ClientVegiDetails /><HomeNavbar /> <Footer /> </>} />
+        <Route path="/clientsvegi" element={<><ClientVegiDetails /> <Footer /> </>} />
         <Route path="/clientrice" element={<><ClientViewRice/> <HomeNavbar /> <Footer /> </> }></Route>
-        <Route path="/clientsrice" element={<><ClientRiceDetails /><HomeNavbar /> <Footer /> </>} />
+        <Route path="/clientsrice" element={<><ClientRiceDetails /> <Footer /> </>} />
 
         <Route path="/animsection" element={<><APNavbar/><AgriSections /><AdminFooter /></>} />
-        <Route path="/agrisection" element={<><APNavbar/><AnimalSections /><AdminFooter /></>} />
+        <Route path="/agrisection" element={<><HomeNavbar/><AnimalSections /><AdminFooter /></>} />
         <Route path="/adminselect" element={<><APNavbar/><AdminNavi1 /><AdminFooter /></>} />
        
         <Route path="/grasstypeselect" element={<><APNavbar/><GrassAdminSelect /><AdminFooter /></>} />
