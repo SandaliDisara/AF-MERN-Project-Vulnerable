@@ -17,7 +17,7 @@ const AnimalBlog = () => {
 
   return (
     <div className="artcile-container">
-      <h2 className="article-title">{title}</h2>
+      <h2 className="article-title" style={{color: "#1a8b1f"}}>{title}</h2>
       <img className="blogimage" src={image} />
       <p className="articlebody">{articlebody}</p>
     </div>

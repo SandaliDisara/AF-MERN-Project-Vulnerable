@@ -125,10 +125,10 @@ export default function App() {
         <Route path="/agriServices" element={<><AgriStaffNavbar /><ImageGridAgri /><SelectionPageStaff /><Footer /></>} />
         <Route path="/agriArticle" element={<><AgriBlog /><Footer /></>} />
         <Route path="/agriArticleEdit" element={<><UpdateAgriBlog /><Footer /></>} />
-        <Route path="/agriUser" element={<><AgriUserNav /><ImageGridAgriUser /><SelectionPage /><Footer /></>} />
+        <Route path="/agriUser" element={<><HomeNavbar/><ImageGridAgriUser /><SelectionPage /><Footer /></>} />
         <Route path="/addanimalblog" element={<><AnimalUserNav /><AnimalBlogForm /><SelectionPage /><Footer /></>} />
-        <Route path="/allanimblogs" element={<><AnimalUserNav /><AllAnimalBlogs /><SelectionPage /><Footer /></>} />
-        <Route path="/animalArticle" element={<AnimalBlog />} />
+        <Route path="/allanimblogs" element={<><HomeNavbar/><AllAnimalBlogs /><SelectionPage /><Footer /></>} />
+        <Route path="/animalArticle" element={<><HomeNavbar/><AnimalBlog /><Footer /></>} />
         <Route path="/allBlogStaff" element={<><AnimalStaffNavbar /><AllBlogsStaff /><SelectionPageStaff /><Footer /></>} />
         <Route path="/blogUpdate" element={<><UpdateBlog /><Footer /></>} />
 
