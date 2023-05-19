@@ -70,7 +70,7 @@ export default function Chicken() {
     console.log(newChicken);
     //send http request
     axios
-      .post("http://localhost:8070/chickenProduction/addChickenProduction", newChicken)
+      .post("http://139.144.14.151:8070/chickenProduction/addChickenProduction", newChicken)
       .then(() => {
         alert("New Chicken details added");
        

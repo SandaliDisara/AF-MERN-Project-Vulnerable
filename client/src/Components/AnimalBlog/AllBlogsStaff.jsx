@@ -10,7 +10,7 @@ export default function AllBlogsStaff() {
     const fetchImages = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8070/imageTest/images"
+          "http://139.144.14.151:8070/imageTest/images"
         );
         setAnimblogs(response.data);
       } catch (error) {

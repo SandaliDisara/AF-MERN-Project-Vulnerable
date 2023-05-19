@@ -50,7 +50,7 @@ export default function AnimalBlogForm() {
       formData.append("articlebody", articlebody);
 
       const response = await axios.post(
-        "http://localhost:8070/imageTest/upload",
+        "http://139.144.14.151:8070/imageTest/upload",
         formData,
         {
           headers: {

@@ -57,7 +57,7 @@ export default function Beef() {
   const [Year, setYear] = useState('');
 
   const sendDataToUpdate = () => {
-    axios.put(`http://localhost:8070/vegitableProduction/updateVegitableProduction/${ID}`, {
+    axios.put(`http://139.144.14.151:8070/vegitableProduction/updateVegitableProduction/${ID}`, {
         District, 
         Division, 
         VegiType, 

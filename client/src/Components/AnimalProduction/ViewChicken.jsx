@@ -113,7 +113,7 @@ export default function CustomPaginationActionsTable() {
 
 
   useEffect(() => {
-    Axios.get('http://localhost:8070/chickenProduction/getChickenProduction')
+    Axios.get('http://139.144.14.151:8070/chickenProduction/getChickenProduction')
       .then((getChicken) => {
         setProduct(getChicken.data);
       })
@@ -134,7 +134,7 @@ export default function CustomPaginationActionsTable() {
   }
   
   const onDelete = (_id) => {
-    Axios.delete("http://localhost:8070/chickenProduction/deleteChickenProduction/" + _id)
+    Axios.delete("http://139.144.14.151:8070/chickenProduction/deleteChickenProduction/" + _id)
       .then(() => {
         window.location.reload();
       })

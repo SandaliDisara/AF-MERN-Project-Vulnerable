@@ -47,7 +47,7 @@ export default function AgriBlogForm() {
       formData.append("articlebody", articlebody);
 
       const response = await axios.post(
-        "http://localhost:8070/agriBlog/upload",
+        "http://139.144.14.151:8070/agriBlog/upload",
         formData,
         {
           headers: {
