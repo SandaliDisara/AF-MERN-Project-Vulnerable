@@ -29,7 +29,7 @@ export default function AllAnimalBlogs() {
   };
 
   return (
-    <div className="image-grid" style={{marginTop: "100"}}>
+    <div className="image-grid">
       {animblogs.map((animblog) => (
         <div key={animblog._id} className="image-card">
           <div

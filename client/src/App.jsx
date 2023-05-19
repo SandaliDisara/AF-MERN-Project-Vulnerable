@@ -98,6 +98,7 @@ import ClientViewVegi from "./Components/AgricultureProduction/ClientViewVegi";
 import ClientVegiDetails from "./Components/AgricultureProduction/ClientVegiDetails";
 import ClientViewRice from "./Components/AgricultureProduction/ClientViewRice";
 import ClientRiceDetails from "./Components/AgricultureProduction/ClientRiceDetails";
+import ImageGridNavBar from "./Components/ImageGridNavBar";
 
 export default function App() {
   return (
@@ -125,9 +126,9 @@ export default function App() {
         <Route path="/agriServices" element={<><AgriStaffNavbar /><ImageGridAgri /><SelectionPageStaff /><Footer /></>} />
         <Route path="/agriArticle" element={<><AgriBlog /><Footer /></>} />
         <Route path="/agriArticleEdit" element={<><UpdateAgriBlog /><Footer /></>} />
-        <Route path="/agriUser" element={<><HomeNavbar/><ImageGridAgriUser /><SelectionPage /><Footer /></>} />
+        <Route path="/agriUser" element={<><ImageGridNavBar/><ImageGridAgriUser /><SelectionPage /><Footer /></>} />
         <Route path="/addanimalblog" element={<><AnimalUserNav /><AnimalBlogForm /><SelectionPage /><Footer /></>} />
-        <Route path="/allanimblogs" element={<><HomeNavbar/><AllAnimalBlogs /><SelectionPage /><Footer /></>} />
+        <Route path="/allanimblogs" element={<><ImageGridNavBar/><AllAnimalBlogs /><SelectionPage /><Footer /></>} />
         <Route path="/animalArticle" element={<><HomeNavbar/><AnimalBlog /><Footer /></>} />
         <Route path="/allBlogStaff" element={<><AnimalStaffNavbar /><AllBlogsStaff /><SelectionPageStaff /><Footer /></>} />
         <Route path="/blogUpdate" element={<><UpdateBlog /><Footer /></>} />
