@@ -113,7 +113,7 @@ export default function CustomPaginationActionsTable() {
 
 
   useEffect(() => {
-    Axios.get('http://139.144.14.151:8070/riceProduction/getRiceProduction')
+    Axios.get('http://localhost:8070/riceProduction/getRiceProduction')
       .then((getRice) => {
         setRice(getRice.data);
       })
@@ -134,7 +134,7 @@ export default function CustomPaginationActionsTable() {
   }
   
   // const onDelete = (_id) => {
-  //   Axios.delete("http://139.144.14.151:8070/riceProduction/deleteRiceProduction/" + _id)
+  //   Axios.delete("http://localhost:8070/riceProduction/deleteRiceProduction/" + _id)
   //     .then(() => {
   //       window.location.reload();
   //     })

@@ -53,7 +53,7 @@ export default function UpdateAgriBlog() {
   };
 
   const handleSubmit = () => {
-    axios.put("http://139.144.14.151:8070/agriBlog/images/" + ID, {
+    axios.put("http://localhost:8070/agriBlog/images/" + ID, {
       title,
       articlebody,
       image,
@@ -63,7 +63,7 @@ export default function UpdateAgriBlog() {
 
   const handleDeleteConfirm = () => {
     axios
-      .delete(`http://139.144.14.151:8070/agriBlog/images/${ID}`)
+      .delete(`http://localhost:8070/agriBlog/images/${ID}`)
       .then(() => {
         console.log("Deleted");
         navigate("/agriServices");

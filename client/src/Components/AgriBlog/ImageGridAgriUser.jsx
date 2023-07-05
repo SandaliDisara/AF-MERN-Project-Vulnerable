@@ -17,7 +17,7 @@ export default function ImageGridAgriUser() {
     const fetchImages = async () => {
       try {
         const response = await axios.get(
-          "http://139.144.14.151:8070/agriBlog/images"
+          "http://localhost:8070/agriBlog/images"
         );
         setAgriblogs(response.data);
       } catch (error) {

@@ -112,7 +112,7 @@ export default function CustomPaginationActionsTable() {
 
 
   useEffect(() => {
-    Axios.get('http://139.144.14.151:8070/beefProduction/getBeefProduction')
+    Axios.get('http://localhost:8070/beefProduction/getBeefProduction')
       .then((getBeef) => {
         setProduct(getBeef.data);
       })

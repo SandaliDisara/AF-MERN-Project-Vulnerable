@@ -54,7 +54,7 @@ export default function UpdateBlog() {
   };
 
   const handleSubmit = () => {
-    axios.put("http://139.144.14.151:8070/imageTest/update/" + ID, {
+    axios.put("http://localhost:8070/imageTest/update/" + ID, {
       title,
       articlebody,
       image,
@@ -64,7 +64,7 @@ export default function UpdateBlog() {
 
   const handleDeleteConfirm = () => {
     axios
-      .delete(`http://139.144.14.151:8070/imageTest/delete/${ID}`)
+      .delete(`http://localhost:8070/imageTest/delete/${ID}`)
       .then(() => {
         console.log("Deleted");
         navigate("/allBlogstaff");

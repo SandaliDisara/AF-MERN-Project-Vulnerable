@@ -42,7 +42,7 @@ export default function LandingPageGrassroot() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://139.144.14.151:8070/staff/loginStaff", {
+      const response = await fetch("http://localhost:8070/staff/loginStaff", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

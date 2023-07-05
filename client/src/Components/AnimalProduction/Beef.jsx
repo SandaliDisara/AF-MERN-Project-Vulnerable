@@ -70,7 +70,7 @@ export default function Beef() {
     console.log(newBeef);
     //send http request
     axios
-      .post("http://139.144.14.151:8070/beefProduction/addBeefProduction", newBeef)
+      .post("http://localhost:8070/beefProduction/addBeefProduction", newBeef)
       .then(() => {
         alert("New Beef details added");
        

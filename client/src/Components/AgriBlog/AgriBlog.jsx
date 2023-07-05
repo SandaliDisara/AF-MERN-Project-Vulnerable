@@ -33,7 +33,7 @@ const AgriBlog = () => {
   };
   const handleDeleteConfirm = () => {
     axios
-      .delete(`http://139.144.14.151:8070/agriBlog/images/${id}`)
+      .delete(`http://localhost:8070/agriBlog/images/${id}`)
       .then(() => {
         console.log("Deleted");
         navigate("/agriServices");
