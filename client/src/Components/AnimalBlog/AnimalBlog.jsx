@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./css/ImageGrid.css";
 // import { useParams } from "react-router-dom";
 // import axios from "axios";
 // the commented statement are not used uncomment them if you want to use them
@@ -17,7 +18,7 @@ const AnimalBlog = () => {
 
   return (
     <div className="artcile-container">
-      <h2 className="article-title">{title}</h2>
+      <h2 className="article-title" style={{ color: "#1a8b1f"}}>{title}</h2>
       <img className="blogimage" src={image} />
       <p className="articlebody">{articlebody}</p>
     </div>

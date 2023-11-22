@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginRight: theme.spacing(10),
   },
-  
+  logoutButton: {
+    marginLeft: 'auto',
+  },
 }));
 
 export default function Navbar() {
@@ -29,20 +31,19 @@ export default function Navbar() {
 
   return (
     <ThemeProvider theme={theme}>
-    <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            LAAIF
-          </Typography>
-          <div>
-            <Button color="inherit" href="/adminselect">Admin Home</Button>
-            <Button color="inherit" href="/">User Home</Button>
-            
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  </ThemeProvider>
+      <div className={classes.root}>
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              LAAIF
+            </Typography>
+            <div>
+              <Button color="inherit" href="/adminselect">Admin Home</Button>
+            </div>
+            <Button color="inherit" href="/login" className={classes.logoutButton}>Logout</Button>
+          </Toolbar>
+        </AppBar>
+      </div>
+    </ThemeProvider>
   );
 }

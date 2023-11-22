@@ -1,8 +1,9 @@
-import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 import { createTheme } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 
 const theme = createTheme({
@@ -20,9 +21,12 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginRight: theme.spacing(10),
   },
+  logoutButton: {
+    marginLeft: 'auto',
+  },
 }));
 
-export default function HomeNavbar() {
+export default function Navbar() {
   const classes = useStyles();
 
   return (
@@ -34,7 +38,9 @@ export default function HomeNavbar() {
               LAAIF
             </Typography>
             <div>
+              <Button color="inherit" href="/">User Home</Button>
             </div>
+            <Button color="inherit" href="/login" className={classes.logoutButton}>Logout</Button>
           </Toolbar>
         </AppBar>
       </div>
