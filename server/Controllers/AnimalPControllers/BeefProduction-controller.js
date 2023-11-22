@@ -1,4 +1,4 @@
-const BeefProduction = require("../../models/AnimalProduction/BeefProduction");
+const BeefProduction = require("../../Models/AnimalProduction/BeefProduction");
 
 
 //this controller is used to add a new beef production.

@@ -28,7 +28,7 @@ export default function ImageGridAgriUser() {
   }, []);
 
   return (
-    <div className="image-grid">
+    <div className="image-grid" >
       {agriblogs.map((animblog) => (
         <div key={animblog._id} className="image-card">
           <div

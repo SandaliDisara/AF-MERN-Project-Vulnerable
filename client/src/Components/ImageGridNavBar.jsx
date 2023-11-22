@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
 }));
-export default function AgriStaffNavbar() {
+export default function ImageGridNavBar() {
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -33,9 +33,9 @@ export default function AgriStaffNavbar() {
             variant="outlined"
             color="inherit"
             className={classes.button}
-            onClick={handleAddNew}
+            href="/"
           >
-            Add New
+            Back
           </Button>
          
         </div>
