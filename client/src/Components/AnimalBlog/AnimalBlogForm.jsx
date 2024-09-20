@@ -28,7 +28,13 @@ export default function AnimalBlogForm() {
   const [image, setImage] = useState(null);
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    const file = event.target.files[0];
+    const validFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!validFileTypes.includes(file.type)) {
+      alert("Invalid file type. Please select a JPEG. PNG pr JPG image.");
+      return;
+    }
+    setFile(file);
   };
 
   const handleTitleChange = (event) => {
