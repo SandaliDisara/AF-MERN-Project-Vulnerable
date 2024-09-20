@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import DOMPurify from "dompurify"; 
 import { useNavigate } from "react-router-dom";
 import UpdateAgriBlog from "./UpdateAgriBlog";
 import "./css/Blog.css";
@@ -20,10 +21,11 @@ const AgriBlog = () => {
   const [isUpdateOpen, setIsUpdateOpen] = useState(false); // add this state
   const navigate = useNavigate();
   useEffect(() => {
-    setTitle(localStorage.getItem("title"));
-    setArticlebody(localStorage.getItem("articlebody"));
-    setImage(localStorage.getItem("image"));
-    setID(localStorage.getItem("ID"));
+    // Sanitize the values from localStorage
+    setTitle(DOMPurify.sanitize(localStorage.getItem("title")));
+    setArticlebody(DOMPurify.sanitize(localStorage.getItem("articlebody")));
+    setImage(DOMPurify.sanitize(localStorage.getItem("image")));
+    setID(DOMPurify.sanitize(localStorage.getItem("ID")));
   }, []);
   const handleDeleteClick = () => {
     setIsDeleteDialogOpen(true);

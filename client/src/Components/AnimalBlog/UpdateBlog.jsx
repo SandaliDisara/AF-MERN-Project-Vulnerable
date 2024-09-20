@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "./css/Blogform.css";
+import DOMPurify from "dompurify"; 
 import {
   Dialog,
   DialogActions,
@@ -32,10 +33,11 @@ export default function UpdateBlog() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
-    setTitle(localStorage.getItem("title"));
-    setArticlebody(localStorage.getItem("articlebody"));
-    setImage(localStorage.getItem("image"));
-    setID(localStorage.getItem("ID"));
+    // Sanitize the values retrieved from localStorage
+    setTitle(DOMPurify.sanitize(localStorage.getItem("title")));
+    setArticlebody(DOMPurify.sanitize(localStorage.getItem("articlebody")));
+    setImage(DOMPurify.sanitize(localStorage.getItem("image")));
+    setID(DOMPurify.sanitize(localStorage.getItem("ID")));
   }, []);
 
   const handleTitleChange = (event) => {

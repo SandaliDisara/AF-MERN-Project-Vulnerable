@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./css/ImageGrid.css";
 import { Link } from "react-router-dom";
+import DOMPurify from "dompurify"; 
 
 export default function ImageGridAgri() {
   const [agriblogs, setAgriblogs] = useState([]);
 
   const setID = (_id, title, articlebody, image) => {
-    localStorage.setItem("title", title);
-    localStorage.setItem("articlebody", articlebody);
-    localStorage.setItem("image", image);
+    // Sanitize the data before storing it in localStorage
+    localStorage.setItem("title", DOMPurify.sanitize(title));
+    localStorage.setItem("articlebody", DOMPurify.sanitize(articlebody));
+    localStorage.setItem("image", DOMPurify.sanitize(image));
     localStorage.setItem("ID", _id);
   };
 
@@ -35,15 +37,15 @@ export default function ImageGridAgri() {
             onClick={() =>
               setID(
                 animblog._id,
-                animblog.title,
-                animblog.articlebody,
-                animblog.image
+                DOMPurify.sanitize(animblog.title),  // Sanitize title
+                DOMPurify.sanitize(animblog.articlebody),  // Sanitize articlebody
+                DOMPurify.sanitize(animblog.image)  // Sanitize image
               )
             }
           >
             <Link to={`/agriArticleEdit`} style={{ textDecoration: "none" }}>
-              <img src={animblog.image} alt={animblog.title} />
-              <h2>{animblog.title}</h2>
+              <img src={DOMPurify.sanitize(animblog.image)} alt={DOMPurify.sanitize(animblog.title)} /> {/* Sanitize image and title */}
+              <h2>{DOMPurify.sanitize(animblog.title)}</h2>  {/* Sanitize title */}
             </Link>
           </div>
         </div>

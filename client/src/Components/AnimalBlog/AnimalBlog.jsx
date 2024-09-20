@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import DOMPurify from 'dompurify';
 import "./css/ImageGrid.css";
 // import { useParams } from "react-router-dom";
 // import axios from "axios";
@@ -10,10 +11,10 @@ const AnimalBlog = () => {
   // const [ID, setID] = useState(null);
 
   useEffect(() => {
-    setTitle(localStorage.getItem("title"));
-    setArticlebody(localStorage.getItem("articlebody"));
-    setImage(localStorage.getItem("image"));
-    // setID(localStorage.getItem("ID"));
+     // Sanitize before setting the state
+     setTitle(DOMPurify.sanitize(localStorage.getItem("title")));
+     setArticlebody(DOMPurify.sanitize(localStorage.getItem("articlebody")));
+     setImage(DOMPurify.sanitize(localStorage.getItem("image")));
   }, []);
 
   return (
