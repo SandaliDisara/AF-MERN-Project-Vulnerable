@@ -3,7 +3,7 @@ const Grass = require("../Models/Grass");
 const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
-const JWT_SECTRET_KEY = "MyKey";
+require('dotenv').config();
 
 const Joi = require('joi');  // For input validation
 const validator = require('validator'); 

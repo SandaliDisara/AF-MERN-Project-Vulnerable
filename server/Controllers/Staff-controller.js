@@ -1,7 +1,7 @@
 const Staff = require("../Models/Staff");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const JWT_SECTRET_KEY = "MyKey";
+require('dotenv').config();
 
 const signupStaff = async (req, res, next) => {
   const { name, username, password } = req.body;
