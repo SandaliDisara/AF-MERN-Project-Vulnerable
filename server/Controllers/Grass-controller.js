@@ -99,7 +99,7 @@ const loginGrass = async (req, res, next) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ id: existingGrass._id }, JWT_SECTRET_KEY, {
+    const token = jwt.sign({ id: existingGrass._id }, process.env.JWT_SECTRET_KEY, {
       expiresIn: "1h",
     });
 

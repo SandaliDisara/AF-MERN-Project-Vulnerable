@@ -53,7 +53,7 @@ const loginStaff = async (req, res, next) => {
   if (!isPassCorrect) {
     return res.status(400).json({ message: "Invalid username / password" });
   }
-  const token = jwt.sign({ id: existingStaff._id }, JWT_SECTRET_KEY, {
+  const token = jwt.sign({ id: existingStaff._id }, process.env.JWT_SECTRET_KEY, {
     expiresIn: "1hr",
   });
   return res
