@@ -5,8 +5,10 @@ const fs = require("fs");
 const sharp = require("sharp");
 const Image = require("../Models/AgriBlog");
 
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    
     cb(null, "../client/public/Assets/agriBlogs");
   },
   filename: (req, file, cb) => {
@@ -16,13 +18,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// Validate file paths to prevent path traversal
+function isValidFilePath(filePath) {
+  const resolvedPath = path.resolve(filePath);
+  return resolvedPath.startsWith("../client/public/Assets/agriBlogs");  // Ensure the path is within allowed directory
+}
+
 // Upload file to server
 router.post("/upload", upload.single("image"), async (req, res) => {
   try {
-    const { title } = req.body;
-    const { articlebody } = req.body;
+    const { title, articlebody } = req.body;
     const { filename: imageName } = req.file;
     const imagePath = `/Assets/agriBlogs/${imageName}`;
+
     // Save file path to MongoDB
     const image = await Image.create({
       title,
@@ -32,9 +40,10 @@ router.post("/upload", upload.single("image"), async (req, res) => {
     res.json(image);
   } catch (error) {
     console.error(error);
-
-    // Delete uploaded file if there is an error
-    fs.unlinkSync(req.file.path);
+    const filePath = path.join("../client/public/Assets/agriBlogs", req.file.filename);
+    if (isValidFilePath(filePath)) {
+      fs.unlinkSync(filePath);
+    }
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -58,20 +67,28 @@ router.delete("/images/:id", async (req, res) => {
       return res.status(404).json({ error: "Image not found" });
     }
 
-    // Remove image from file system
-    fs.unlinkSync(`../client/public${image.image}`);
+    // Construct the correct path to the file
+    const filePath = path.join(__dirname, "../../client/public", image.image); 
 
-    // Remove image from MongoDB
+    // Check if the file exists and delete it
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      console.log(`File deleted: ${filePath}`);
+    } else {
+      console.error(`File not found: ${filePath}`);
+    }
+
+    // Remove image record from MongoDB
     await Image.findByIdAndDelete(req.params.id);
 
     res.json({ message: "Image removed" });
   } catch (error) {
-    console.error(error);
+    console.error("Error deleting image:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
 
-//update a record
+// Update a record
 router.put("/images/:id", upload.single("image"), async (req, res) => {
   try {
     const { title, articlebody } = req.body;
@@ -82,8 +99,11 @@ router.put("/images/:id", upload.single("image"), async (req, res) => {
     }
 
     if (req.file) {
-      // If a new image is uploaded, remove the old one and save the new one
-      fs.unlinkSync(`../client/public${image.image}`);
+      const oldImagePath = path.join(`../client/public${image.image}`);
+      if (isValidFilePath(oldImagePath) && fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
+      }
+
       image.image = `/Assets/agriBlogs/${req.file.filename}`;
     }
 
