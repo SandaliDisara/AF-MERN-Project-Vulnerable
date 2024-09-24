@@ -30,8 +30,25 @@ export default function UpdateAgriBlog() {
   const [image, setImage] = useState(null);
   const [ID, setID] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [csrfToken, setCsrfToken] = useState("");
 
+  // Fetch the CSRF token when the component mounts
   useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await fetch("http://localhost:8070/get-csrf-token", {
+          method: "GET",
+          credentials: "include",  // Include credentials to allow cookies
+        });
+        const data = await response.json();
+        setCsrfToken(data.csrfToken);  // Store the CSRF token in state
+        console.log("CSRF token fetched successfully");
+      } catch (error) {
+        console.error("Error fetching CSRF token:", error);
+      }
+    };
+    fetchCsrfToken();
+    
     // Sanitize values from localStorage before using them
     setTitle(DOMPurify.sanitize(localStorage.getItem("title")));
     setArticlebody(DOMPurify.sanitize(localStorage.getItem("articlebody")));
@@ -54,25 +71,37 @@ export default function UpdateAgriBlog() {
     setIsDeleteDialogOpen(false);
   };
 
-  const handleSubmit = () => {
-    axios.put("http://localhost:8070/agriBlog/images/" + ID, {
-      title,
-      articlebody,
-      image,
-    });
-    navigate("/agriServices");
+  const handleSubmit = async () => {
+    try {
+      await axios.put(`http://localhost:8070/agriBlog/images/${ID}`, {
+        title,
+        articlebody,
+        image,
+      }, {
+        headers: {
+          "CSRF-Token": csrfToken,  // Include the CSRF token in headers
+        },
+        withCredentials: true,  // Include credentials to allow cookies
+      });
+      navigate("/agriServices");
+    } catch (error) {
+      console.error("Error updating article:", error);
+    }
   };
 
-  const handleDeleteConfirm = () => {
-    axios
-      .delete(`http://localhost:8070/agriBlog/images/${ID}`)
-      .then(() => {
-        console.log("Deleted");
-        navigate("/agriServices");
-      })
-      .catch((error) => {
-        console.error(error);
+  const handleDeleteConfirm = async () => {
+    try {
+      await axios.delete(`http://localhost:8070/agriBlog/images/${ID}`, {
+        headers: {
+          "CSRF-Token": csrfToken,  // Include the CSRF token in headers
+        },
+        withCredentials: true,  // Include credentials to allow cookies
       });
+      console.log("Deleted");
+      navigate("/agriServices");
+    } catch (error) {
+      console.error("Error deleting article:", error);
+    }
     setIsDeleteDialogOpen(false);
   };
 
