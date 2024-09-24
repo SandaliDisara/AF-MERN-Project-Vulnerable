@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import { Input, Button } from "@material-ui/core";
@@ -24,6 +24,26 @@ export default function AgriBlogForm() {
   const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
   const [articlebody, setArticlebody] = useState(null);
+  const [csrfToken, setCsrfToken] = useState("");  // State to store CSRF token
+
+ // Fetch the CSRF token when the component mounts
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {       
+        const response = await fetch("http://localhost:8070/get-csrf-token", {
+          method: "GET",
+          credentials: "include",  // Include credentials to allow cookies
+        });
+        const data = await response.json();
+        setCsrfToken(data.csrfToken);  // Store the CSRF token in state
+        console.log("CSRF token fetched successfully");
+      } catch (error) {
+        console.error("Error fetching CSRF token:", error);
+      }
+    };
+    fetchCsrfToken();
+  }, []);
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -58,7 +78,9 @@ export default function AgriBlogForm() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            "CSRF-Token": csrfToken,  // Include CSRF token in the headers
           },
+          withCredentials: true,  // Ensure credentials like cookies are sent
         }
       );
       setImage(response.data);
@@ -72,7 +94,7 @@ export default function AgriBlogForm() {
       // Use navigate to redirect to the specified route
       navigate("/agriServices");
     } catch (error) {
-      setError(error.response.data.error);
+      setError(error.response?.data?.error || "An error occurred.");
     } finally {
       setLoading(false);
     }
