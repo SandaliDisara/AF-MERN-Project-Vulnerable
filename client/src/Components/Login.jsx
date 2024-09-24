@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import green from '@mui/material/colors/green';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 // import axios from 'axios';
 
@@ -36,50 +36,56 @@ const theme = createTheme({
 });
 
 export default function SignIn() {
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     const data = new FormData(event.currentTarget);
-//     console.log({
-//       email: data.get('email'),
-//       password: data.get('password'),
-//     });
-//   };
 
   const navigate = useNavigate();
-  const [username,setUsername]=useState('')
-  const [password,setPassword]=useState('')
- 
+  const [username,setUsername]=useState('');
+  const [password,setPassword]=useState('');
+  const [csrfToken, setCsrfToken] = useState("");
+  
+  // Fetch the CSRF token when the component mounts
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await fetch("http://localhost:8070/get-csrf-token", {
+          method: "GET",
+          credentials: "include",  // Include credentials to allow cookies
+        });
+        const data = await response.json();
+        setCsrfToken(data.csrfToken);  // Store the CSRF token in state
+        console.log("CSRF token fetched successfully")
+      } catch (error) {
+        console.error("Error fetching CSRF token:", error);
+      }
+    };
+    fetchCsrfToken();
+  }, []);
 
-
-
-
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        try {
-          const response = await fetch("http://localhost:8070/grass/loginGrass", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password }),
-
-            
-          });
-    
-          if (response.ok) {
-            navigate("/adminselect");
-           
-            sessionStorage.setItem('hasLoggedIn', 'true');
-          } else {
-            alert("Login failed. Please check your credentials and try again.");
-          }
-        } catch (error) {
-          console.error(error);
-          alert("An error occurred. Please try again later.");
-        }
-      };  
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await fetch("http://localhost:8070/grass/loginGrass", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "CSRF-Token": csrfToken,  // Include the CSRF token in the headers
+        },
+        body: JSON.stringify({ username, password }),
+        credentials: "include",  // Ensure cookies are sent
+      });
+  
+      if (response.ok) {
+        navigate("/adminselect");
+        sessionStorage.setItem("hasLoggedIn", "true");
+      } else {
+        alert("Login failed. Please check your credentials and try again.");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An error occurred. Please try again later.");
+    }
+  };
+  
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

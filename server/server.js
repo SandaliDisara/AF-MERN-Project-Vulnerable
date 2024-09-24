@@ -3,12 +3,33 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const csurf = require("csurf");  // Import csurf middleware
+const cookieParser = require("cookie-parser");  // Required to handle CSRF tokens in cookies\
+
 const app = express();
 require("dotenv").config();
 const PORT = process.env.PORT || 8070;
-app.use(cors());
+
+// CSRF Protection middleware
+const csrfProtection = csurf({ cookie: true });  // Enable CSRF protection using cookies
+
+app.use(cors({
+  origin: 'http://localhost:3000',  // Replace with your frontend's URL
+  credentials: true  // This is required to allow cookies to be sent with the request
+}));
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(cookieParser());  // Enable cookie parsing for CSRF
+
+// Enable CSRF protection for routes where necessary
+app.use(csrfProtection);
+
+// Route to send the CSRF token
+app.get("/get-csrf-token", (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });  // Send the CSRF token to the client
+});
+
+
 //connect database
 const URL = process.env.MONGODB_URL;
 app.use(express.static("../client/src/Assets/images"));
