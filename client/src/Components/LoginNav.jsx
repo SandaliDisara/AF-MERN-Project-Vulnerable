@@ -4,8 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { GoogleLogout } from 'react-google-login';
+import { useNavigate } from 'react-router';
+import { useState, useEffect } from 'react';
 
-
+// Create a theme with desired colors
 const theme = createTheme({
   palette: {
     primary: {
@@ -28,6 +31,32 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar() {
   const classes = useStyles();
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const navigate = useNavigate();
+
+  // Manage login state
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if the user is logged in when the component mounts
+  useEffect(() => {
+    const hasLoggedIn = sessionStorage.getItem("hasLoggedIn");
+    setIsLoggedIn(!!hasLoggedIn); // If 'hasLoggedIn' exists, set to true
+  }, []);
+
+  // Google logout success
+  const onLogoutSuccess = () => {
+    console.log("Google Logout Success!");
+
+    // Clear session data and navigate to login
+    sessionStorage.removeItem("hasLoggedIn");
+    setIsLoggedIn(false); // Update the state to reflect the logout
+    navigate("/login");
+  }
+
+  // Google logout failure
+  const onLogoutFailure = (res) => {
+    console.log("Google Logout Failed! res: ", res);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,10 +66,30 @@ export default function Navbar() {
             <Typography variant="h6" className={classes.title}>
               LAAIF
             </Typography>
-            <div>
-              <Button color="inherit" href="/">User Home</Button>
-            </div>
-            <Button color="inherit" href="/login" className={classes.logoutButton}>Logout</Button>
+
+            {/* Show "User Home" button only if logged in */}
+            {isLoggedIn && (
+              <div>
+                <Button color="inherit" href="/">User Home</Button>
+              </div>
+            )}
+
+            {/* Show Google Logout if user is logged in, else hide */}
+            {isLoggedIn ? (
+              <>
+                <GoogleLogout
+                  clientId={clientId}
+                  buttonText={"Logout"}
+                  onLogoutSuccess={onLogoutSuccess}
+                  onFailure={onLogoutFailure}
+                  className={classes.logoutButton}
+                />
+              </>
+            ) : (
+              <Button color="inherit" href="/login" className={classes.logoutButton}>
+                Login
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
       </div>

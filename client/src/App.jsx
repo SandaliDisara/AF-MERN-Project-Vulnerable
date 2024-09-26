@@ -99,8 +99,21 @@ import ClientVegiDetails from "./Components/AgricultureProduction/ClientVegiDeta
 import ClientViewRice from "./Components/AgricultureProduction/ClientViewRice";
 import ClientRiceDetails from "./Components/AgricultureProduction/ClientRiceDetails";
 import ImageGridNavBar from "./Components/ImageGridNavBar";
+import { useEffect } from "react";
+import { gapi } from 'gapi-script';
 
 export default function App() {
+
+  useEffect(() => {
+    function start() {
+      gapi.client,init({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        scope: ""
+      })
+    };
+    gapi.load('client:auth2', start);
+  });
+
   return (
     <Router>
       <Routes>
@@ -170,7 +183,7 @@ export default function App() {
 
         <Route path="/animsection" element={<><APNavbar/><AgriSections /><AdminFooter /></>} />
         <Route path="/agrisection" element={<><HomeNavbar/><AnimalSections /><AdminFooter /></>} />
-        <Route path="/adminselect" element={<><APNavbar/><AdminNavi1 /><AdminFooter /></>} />
+        <Route path="/adminselect" element={<><LoginNav/><AdminNavi1 /><AdminFooter /></>} />
        
         <Route path="/grasstypeselect" element={<><APNavbar/><GrassAdminSelect /><AdminFooter /></>} />
         <Route path="/sanimsection" element={<><APNavbar/><AnimalSectionAdmin /><AdminFooter /></>} />
