@@ -25,7 +25,7 @@ function isValidFilePath(filePath) {
 }
 
 // Upload file to server
-router.post("/upload", upload.single("image"), async (req, res) => {
+router.post("/upload", upload.single("image"), async (req, res, next) => {
   try {
     const { title, articlebody } = req.body;
     const { filename: imageName } = req.file;
@@ -44,7 +44,11 @@ router.post("/upload", upload.single("image"), async (req, res) => {
     if (isValidFilePath(filePath)) {
       fs.unlinkSync(filePath);
     }
-    res.status(500).json({ error: "Server error" });
+
+    // Forward the error to the error handler middleware
+    next(error);
+    
+    // res.status(500).json({ error: "Server error" });
   }
 });
 
