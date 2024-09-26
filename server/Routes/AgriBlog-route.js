@@ -55,7 +55,11 @@ router.post("/upload", uploadRateLimiter, upload.single("image"), async (req, re
     if (isValidFilePath(filePath)) {
       fs.unlinkSync(filePath);
     }
-    res.status(500).json({ error: "Server error" });
+
+    // Forward the error to the error handler middleware
+    next(error);
+    
+    // res.status(500).json({ error: "Server error" });
   }
 });
 
