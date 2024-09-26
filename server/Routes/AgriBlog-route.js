@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const sharp = require("sharp");
 const Image = require("../Models/AgriBlog");
+const rateLimit = require("express-rate-limit");
 
 
 const storage = multer.diskStorage({
@@ -16,7 +17,17 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 1,  // Limit file size to 1MB
+  },
+});
+
+const uploadRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,  // 15 minutes
+  max: 100,  // Limit each IP to 100 requests per windowMs
+});
 
 // Validate file paths to prevent path traversal
 function isValidFilePath(filePath) {
@@ -25,7 +36,7 @@ function isValidFilePath(filePath) {
 }
 
 // Upload file to server
-router.post("/upload", upload.single("image"), async (req, res, next) => {
+router.post("/upload", uploadRateLimiter, upload.single("image"), async (req, res) => {
   try {
     const { title, articlebody } = req.body;
     const { filename: imageName } = req.file;
