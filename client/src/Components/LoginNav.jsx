@@ -67,28 +67,18 @@ export default function Navbar() {
               LAAIF
             </Typography>
 
-            {/* Show "User Home" button only if logged in */}
-            {isLoggedIn && (
-              <div>
-                <Button color="inherit" href="/">User Home</Button>
-              </div>
-            )}
-
-            {/* Show Google Logout if user is logged in, else hide */}
+            {/* Show Google Logout if user is logged in, else show Login */}
             {isLoggedIn ? (
-              <>
-                <GoogleLogout
-                  clientId={clientId}
-                  buttonText={"Logout"}
-                  onLogoutSuccess={onLogoutSuccess}
-                  onFailure={onLogoutFailure}
-                  className={classes.logoutButton}
-                />
-              </>
+              <GoogleLogout
+                clientId={clientId}
+                buttonText={"Logout"}
+                onLogoutSuccess={onLogoutSuccess}
+                onFailure={onLogoutFailure}
+                className={classes.logoutButton}
+              />
             ) : (
-              <Button color="inherit" href="/login" className={classes.logoutButton}>
-                Login
-              </Button>
+              // Show User Home button only if not logged in
+              <Button color="inherit" href="/">User Home</Button>
             )}
           </Toolbar>
         </AppBar>

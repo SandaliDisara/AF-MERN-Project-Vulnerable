@@ -185,9 +185,9 @@ export default function App() {
         <Route path="/agrisection" element={<><HomeNavbar/><AnimalSections /><AdminFooter /></>} />
         <Route path="/adminselect" element={<><LoginNav/><AdminNavi1 /><AdminFooter /></>} />
        
-        <Route path="/grasstypeselect" element={<><APNavbar/><GrassAdminSelect /><AdminFooter /></>} />
-        <Route path="/sanimsection" element={<><APNavbar/><AnimalSectionAdmin /><AdminFooter /></>} />
-        <Route path="/sagrisection" element={<><APNavbar/><AgriAdminSelector /><AdminFooter /></>} />
+        <Route path="/grasstypeselect" element={<><LoginNav/><GrassAdminSelect /><AdminFooter /></>} />
+        <Route path="/sanimsection" element={<><LoginNav/><AnimalSectionAdmin /><AdminFooter /></>} />
+        <Route path="/sagrisection" element={<><LoginNav/><AgriAdminSelector /><AdminFooter /></>} />
       </Routes>
     </Router>
   );
