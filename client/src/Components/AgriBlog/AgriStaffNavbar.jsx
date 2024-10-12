@@ -28,7 +28,11 @@ export default function AgriStaffNavbar() {
         <Typography variant="h6" className={classes.title}>
           LAAIF
         </Typography>
+        
+        <Button color="inherit" href="/adminselect" className={classes.button}>Admin Select</Button>
+
         <div className="ml-auto">
+        
           <Button
             variant="outlined"
             color="inherit"
