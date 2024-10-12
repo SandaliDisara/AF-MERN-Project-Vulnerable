@@ -5,6 +5,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const csurf = require("csurf");  // Import csurf middleware
 const cookieParser = require("cookie-parser");  // Required to handle CSRF tokens in cookies\
+const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
 require("dotenv").config();
@@ -34,6 +35,9 @@ app.get("/get-csrf-token", (req, res) => {
 const URL = process.env.MONGODB_URL;
 app.use(express.static("../client/src/Assets/images"));
 app.use(express.static("../client/src/Assets/animalblogs"));
+
+// Use error handler middleware
+app.use(errorHandler);
 
 
 mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -85,4 +89,6 @@ app.use("/riceProduction", riceRouter);
 //Vegitabel production routes.
 const vegitableRouter = require("./Routes/Agriculture-routes/VegitableProduction-route");
 app.use("/vegitableProduction", vegitableRouter);
+
+
 
