@@ -57,7 +57,7 @@ const getAgricultureProductionByID = async (req, res) => {
     })
     .catch((error) => {
         console.log(error.message);
-        res.status(500).send({ status: "error occured when fetching", error: error.message });
+        res.status(500).send({ status: "An internal server error occurred.", error: error.message });
     });
 };
 
@@ -96,7 +96,7 @@ const updateAgricultureProduction = async (req, res, next) => {
     })
     .catch((error) => {
         console.log(error);
-        res.status(500).send({ status: "Error occured when updating", error: error.message});
+        res.status(500).send({ status: "An internal server error occurred.", error: error.message});
     });
 };
 
@@ -109,7 +109,7 @@ const deleteAgricultureProduction  = async (req, res, next) => {
     })
     .catch((error) => {
         console.log(error.message);
-        res.status(500).send({ status: "Error when deleting the agriculture production", error: error.message});
+        res.status(500).send({ status: "An internal server error occurred.", error: error.message});
     });
 };
 

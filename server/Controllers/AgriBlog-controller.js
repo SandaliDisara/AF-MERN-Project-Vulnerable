@@ -64,7 +64,7 @@ const updateAgriBlog = async (req, res, next) => {
       console.log(err);
       res
         .status(500)
-        .send({ status: "Error in updating agri blog", error: err.message });
+        .send({ status: "An internal server error occurred.", error: err.message });
     });
 };
 
@@ -80,7 +80,7 @@ const deleteAgriBlog = async (req, res, next) => {
       console.log(err.message);
       res
         .status(500)
-        .send({ status: "Error in deleting agri Blog", error: err.message });
+        .send({ status: "An internal server error occurred.", error: err.message });
     });
 };
 

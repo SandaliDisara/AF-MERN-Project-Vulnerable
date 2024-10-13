@@ -2,14 +2,12 @@ const router = require("express").Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const sharp = require("sharp");
-const Image = require("../Models/AgriBlog");
 const rateLimit = require("express-rate-limit");
+const Image = require("../Models/AgriBlog");
 
-
+// Multer storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    
     cb(null, "../client/public/Assets/agriBlogs");
   },
   filename: (req, file, cb) => {
@@ -20,29 +18,36 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   limits: {
-    fileSize: 1024 * 1024 * 1,  // Limit file size to 1MB
+    fileSize: 1024 * 1024 * 1, // 1MB file size limit
   },
 });
 
+// Rate limiter for upload endpoint
 const uploadRateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,  // 15 minutes
-  max: 100,  // Limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
 });
 
-// Validate file paths to prevent path traversal
+// Helper function to validate file paths
 function isValidFilePath(filePath) {
   const resolvedPath = path.resolve(filePath);
-  return resolvedPath.startsWith("../client/public/Assets/agriBlogs");  // Ensure the path is within allowed directory
+  return resolvedPath.startsWith(path.resolve("../client/public/Assets/agriBlogs"));
 }
 
-// Upload file to server
-router.post("/upload", uploadRateLimiter, upload.single("image"), async (req, res) => {
+// Upload file route
+router.post("/upload", uploadRateLimiter, upload.single("image"), async (req, res, next) => {
   try {
     const { title, articlebody } = req.body;
-    const { filename: imageName } = req.file;
+
+    // Validate required fields
+    if (!title || !articlebody || !req.file) {
+      return res.status(400).json({ message: "Title, article body, and image file are required." });
+    }
+
+    const { filename: imageName } = req.file; // Now safe to access req.file
     const imagePath = `/Assets/agriBlogs/${imageName}`;
 
-    // Save file path to MongoDB
+    // Save image record to MongoDB
     const image = await Image.create({
       title,
       articlebody,
@@ -50,61 +55,50 @@ router.post("/upload", uploadRateLimiter, upload.single("image"), async (req, re
     });
     res.json(image);
   } catch (error) {
-    console.error(error);
-    const filePath = path.join("../client/public/Assets/agriBlogs", req.file.filename);
-    if (isValidFilePath(filePath)) {
-      fs.unlinkSync(filePath);
+    // Attempt to remove the uploaded file if it exists
+    if (req.file && isValidFilePath(`../client/public/Assets/agriBlogs/${req.file.filename}`)) {
+      fs.unlinkSync(`../client/public/Assets/agriBlogs/${req.file.filename}`);
     }
-
-    // Forward the error to the error handler middleware
-    next(error);
-    
-    // res.status(500).json({ error: "Server error" });
+    next(error); // Forward error to global error handler
   }
 });
 
-// Get all images
-router.get("/images", async (req, res) => {
+
+// Get all images route
+router.get("/images", async (req, res, next) => {
   try {
     const images = await Image.find({}, { title: 1, articlebody: 1, image: 1 });
     res.json(images);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
+    next(error); // Forward error to global error handler
   }
 });
 
-//delete a record
-router.delete("/images/:id", async (req, res) => {
+// Delete an image route
+router.delete("/images/:id", async (req, res, next) => {
   try {
     const image = await Image.findById(req.params.id);
     if (!image) {
       return res.status(404).json({ error: "Image not found" });
     }
 
-    // Construct the correct path to the file
-    const filePath = path.join(__dirname, "../../client/public", image.image); 
-
-    // Check if the file exists and delete it
-    if (fs.existsSync(filePath)) {
+    // Validate and delete the image file
+    const filePath = path.join(__dirname, "../../client/public", image.image);
+    if (fs.existsSync(filePath) && isValidFilePath(filePath)) {
       fs.unlinkSync(filePath);
       console.log(`File deleted: ${filePath}`);
-    } else {
-      console.error(`File not found: ${filePath}`);
     }
 
-    // Remove image record from MongoDB
+    // Delete image record from MongoDB
     await Image.findByIdAndDelete(req.params.id);
-
     res.json({ message: "Image removed" });
   } catch (error) {
-    console.error("Error deleting image:", error);
-    res.status(500).json({ error: "Server error" });
+    next(error); // Forward error to global error handler
   }
 });
 
-// Update a record
-router.put("/images/:id", upload.single("image"), async (req, res) => {
+// Update an image record route
+router.put("/images/:id", upload.single("image"), async (req, res, next) => {
   try {
     const { title, articlebody } = req.body;
     const image = await Image.findById(req.params.id);
@@ -113,6 +107,7 @@ router.put("/images/:id", upload.single("image"), async (req, res) => {
       return res.status(404).json({ error: "Image not found" });
     }
 
+    // Replace old image if a new one is uploaded
     if (req.file) {
       const oldImagePath = path.join(`../client/public${image.image}`);
       if (isValidFilePath(oldImagePath) && fs.existsSync(oldImagePath)) {
@@ -128,8 +123,7 @@ router.put("/images/:id", upload.single("image"), async (req, res) => {
 
     res.json({ message: "Image updated", image });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
+    next(error); // Forward error to global error handler
   }
 });
 

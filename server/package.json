@@ -21,12 +21,17 @@
     "validator": "^13.12.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "name": "server",
   "version": "1.0.0",
   "main": "server.js",
   "author": "quad200",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
 }
