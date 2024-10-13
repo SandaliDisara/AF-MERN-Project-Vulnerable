@@ -1,12 +1,14 @@
 .image-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start; /* Align cards from left to right */
+  gap: 20px; /* Add a gap between the cards */
+  padding: 10px;
 }
 
 .image-card {
-  width: 300px;
-  margin: 20px;
+  width: 300px; /* Fixed width for all cards */
+  margin: 0; /* Remove margin to prevent additional spacing issues */
   padding: 10px;
   border: 1px solid #ccc;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
